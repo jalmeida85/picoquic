@@ -81,13 +81,21 @@ add_library(picoquic-core
     ${PICOQUIC_LIBRARY_FILES}
 )
 
-add_executable(picoquicdemo picoquicfirst/picoquicdemo.c
+add_executable(picoquic-demo-client picoquicfirst/picoquic_demo_client.c
                             picoquicfirst/getopt.c )
-target_link_libraries(picoquicdemo picoquic-core
+target_link_libraries(picoquic-demo-client picoquic-core
     ${PTLS_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${CMAKE_DL_LIBS}
 )
+
+add_executable(picoquic-demo-server picoquicfirst/picoquic_demo_server.c
+		picoquicfirst/getopt.c )
+target_link_libraries(picoquic-demo-server picoquic-core
+		${PTLS_LIBRARIES}
+		${OPENSSL_LIBRARIES}
+		${CMAKE_DL_LIBS}
+		)
 
 add_executable(picoquic_c2csv picoquic_c2csv_t/picoquic_c2csv_t.c)
 target_link_libraries(picoquic_c2csv picoquic-core
