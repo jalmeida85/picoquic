@@ -97,6 +97,14 @@ target_link_libraries(picoquic-demo-server picoquic-core
 		${CMAKE_DL_LIBS}
 		)
 
+dd_executable(picoquicdemo picoquicfirst/picoquicdemo.c
+		picoquicfirst/getopt.c )
+target_link_libraries(picoquicdemo picoquic-core
+		${PTLS_LIBRARIES}
+		${OPENSSL_LIBRARIES}
+		${CMAKE_DL_LIBS}
+		)
+
 add_executable(picoquic_c2csv picoquic_c2csv_t/picoquic_c2csv_t.c)
 target_link_libraries(picoquic_c2csv picoquic-core
     ${PTLS_LIBRARIES}

@@ -744,6 +744,7 @@ int quic_client(
 					ret =
 						picoquic_demo_client_start_streams(cnx_client, &callback_ctx, PICOQUIC_DEMO_STREAM_ID_INITIAL);
 				} else {
+
 					printf("ERROR: picoquic_is_0rtt_available\n");
 
 				}
