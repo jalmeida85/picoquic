@@ -227,11 +227,11 @@ int quic_server(
 
 			if (strcmp(congestion_control, "newreno") == 0) {
 				printf("Congestion control: using newreno \n");
-				picoquic_set_default_congestion_algorithm(qclient, picoquic_newreno_algorithm);
+				picoquic_set_default_congestion_algorithm(qserver, picoquic_newreno_algorithm);
 
 			} else {
 				printf("Congestion control: using cubic \n");
-				picoquic_set_default_congestion_algorithm(qclient, picoquic_cubic_algorithm);
+				picoquic_set_default_congestion_algorithm(qserver, picoquic_cubic_algorithm);
 			}
 
 			PICOQUIC_SET_LOG(qserver, F_log);
