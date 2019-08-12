@@ -652,7 +652,7 @@ int quic_client(
 			ret = -1;
 		} else {
 
-			if(strcmp(congestion_control, "newreno") == 0) {
+			if (strcmp(congestion_control, "newreno") == 0) {
 				printf("Congestion control: using newreno \n");
 				picoquic_set_default_congestion_algorithm(qclient, picoquic_newreno_algorithm);
 
@@ -891,8 +891,7 @@ int quic_client(
 								cnx_client, &callback_ctx, PICOQUIC_DEMO_STREAM_ID_INITIAL);
 
 							fprintf(stdout, "Not using 0-RTT ");
-						}
-						else {
+						} else {
 							fprintf(stdout, "Using 0-RTT ");
 						}
 					}
@@ -1424,7 +1423,8 @@ int main(int argc, char **argv) {
 			esni_rr_file,
 			F_log,
 			cc_log_dir,
-			use_long_log);
+			use_long_log,
+			congestion_control);
 		printf("Server exit with code = %d\n", ret);
 	} else {
 		/* Run as client */
@@ -1448,7 +1448,8 @@ int main(int argc, char **argv) {
 			no_disk,
 			use_long_log,
 			latency,
-			losses);
+			losses,
+			congestion_control);
 
 		printf("Client exit with code = %d\n", ret);
 	}
