@@ -838,14 +838,14 @@ int quic_client(
 
 				if (picoquic_get_cnx_state(cnx_client) == picoquic_state_client_almost_ready && notified_ready == 0) {
 					if (picoquic_tls_is_psk_handshake(cnx_client)) {
-						fprintf(stdout, "The session was properly resumed!\n");
+						fprintf(stdout, "0-RTT | The session was properly resumed!\n");
 						if (F_log != stdout && F_log != stderr && F_log != NULL) {
 							fprintf(F_log, "The session was properly resumed!\n");
 						}
 					}
 
 					if (cnx_client->zero_rtt_data_accepted) {
-						fprintf(stdout, "Zero RTT data is accepted!\n");
+						fprintf(stdout, "0-RTT data is accepted!\n");
 					}
 					//fprintf(stdout, "Almost ready!\n\n");
 					notified_ready = 1;
@@ -885,6 +885,11 @@ int quic_client(
 
 							picoquic_demo_client_start_streams(
 								cnx_client, &callback_ctx, PICOQUIC_DEMO_STREAM_ID_INITIAL);
+
+							fprintf(stdout, "Not using 0-RTT ");
+						}
+						else {
+							fprintf(stdout, "Using 0-RTT ");
 						}
 					}
 
