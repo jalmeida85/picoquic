@@ -225,10 +225,12 @@ int quic_server(
 			}
 			qserver->mtu_max = mtu_max;
 
-			if (strcmp(congestion_control, "newreno") {
+			if (strcmp(congestion_control, "newreno") == 0) {
+				printf("Congestion control: using newreno \n");
 				picoquic_set_default_congestion_algorithm(qclient, picoquic_newreno_algorithm);
 
 			} else {
+				printf("Congestion control: using cubic \n");
 				picoquic_set_default_congestion_algorithm(qclient, picoquic_cubic_algorithm);
 			}
 
@@ -650,10 +652,12 @@ int quic_client(
 			ret = -1;
 		} else {
 
-			if (strcmp(congestion_control, "newreno") {
+			if(strcmp(congestion_control, "newreno") == 0) {
+				printf("Congestion control: using newreno \n");
 				picoquic_set_default_congestion_algorithm(qclient, picoquic_newreno_algorithm);
 
 			} else {
+				printf("Congestion control: using cubic \n");
 				picoquic_set_default_congestion_algorithm(qclient, picoquic_cubic_algorithm);
 			}
 
