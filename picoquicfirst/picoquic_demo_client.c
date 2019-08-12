@@ -170,7 +170,7 @@ int quic_server(
 	picoquic_connection_id_cb_fn cnx_id_callback, void *cnx_id_callback_ctx,
 	uint8_t reset_seed[PICOQUIC_RESET_SECRET_SIZE], int dest_if, int mtu_max, uint32_t proposed_version,
 	const char *esni_key_file_name, const char *esni_rr_file_name, FILE *F_log, char const *cc_log_dir,
-	int use_long_log) {
+	int use_long_log, const char *congestion_control) {
 	/* Start: start the QUIC process with cert and key files */
 	int ret = 0;
 	picoquic_quic_t *qserver = NULL;
@@ -225,7 +225,12 @@ int quic_server(
 			}
 			qserver->mtu_max = mtu_max;
 
-			picoquic_set_default_congestion_algorithm(qserver, picoquic_cubic_algorithm);
+			if (strcmp(congestion_control, "newreno") {
+				picoquic_set_default_congestion_algorithm(qclient, picoquic_newreno_algorithm);
+
+			} else {
+				picoquic_set_default_congestion_algorithm(qclient, picoquic_cubic_algorithm);
+			}
 
 			PICOQUIC_SET_LOG(qserver, F_log);
 
@@ -547,7 +552,7 @@ int quic_client(
 	const char *root_crt, uint32_t proposed_version, int force_zero_share, int force_migration,
 	int nb_packets_before_key_update, int mtu_max, FILE *F_log, int client_cnx_id_length,
 	char const *client_scenario_text, char const *cc_log_dir, int no_disk, int use_long_log, const char *latency,
-	const char *losses) {
+	const char *losses, const char *congestion_control) {
 	/* Start: start the QUIC process with cert and key files */
 	int ret = 0;
 	picoquic_quic_t *qclient = NULL;
@@ -644,7 +649,13 @@ int quic_client(
 		if (qclient == NULL) {
 			ret = -1;
 		} else {
-			picoquic_set_default_congestion_algorithm(qclient, picoquic_cubic_algorithm);
+
+			if (strcmp(congestion_control, "newreno") {
+				picoquic_set_default_congestion_algorithm(qclient, picoquic_newreno_algorithm);
+
+			} else {
+				picoquic_set_default_congestion_algorithm(qclient, picoquic_cubic_algorithm);
+			}
 
 			if (picoquic_load_tokens(&qclient->p_first_token, current_time, token_store_filename) != 0) {
 				fprintf(stderr, "Could not load tokens from <%s>.\n", token_store_filename);
@@ -932,9 +943,10 @@ int quic_client(
 									duration_usec = (double) (current_time - picoquic_get_cnx_start_time(cnx_client));
 
 								if (duration_usec > 0) {
-									double rate = (((double) picoquic_get_data_received(cnx_client)) * 8.0f * 1000.0f * 1000.0f)
-										/ (1024.0f * 1024.0f
-											* (current_time - picoquic_get_cnx_start_time(cnx_client)));
+									double rate =
+										(((double) picoquic_get_data_received(cnx_client)) * 8.0f * 1000.0f * 1000.0f)
+											/ (1024.0f * 1024.0f
+												* (current_time - picoquic_get_cnx_start_time(cnx_client)));
 									fprintf(
 										stdout,
 										"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t rate: %f\n",
@@ -1176,6 +1188,7 @@ int main(int argc, char **argv) {
 	const char *root_trust_file = NULL;
 	const char *latency = NULL;
 	const char *losses = NULL;
+	const char *congestion_control = NULL;
 	uint32_t proposed_version = 0;
 	int is_client = 0;
 	int just_once = 0;
@@ -1205,8 +1218,10 @@ int main(int argc, char **argv) {
 
 	/* Get the parameters */
 	int opt;
-	while ((opt = getopt(argc, argv, "x:y:c:k:K:p:u:v:f:i:s:e:E:l:m:n:a:t:S:I:g:1rhzDL")) != -1) {
+	while ((opt = getopt(argc, argv, "b:x:y:c:k:K:p:u:v:f:i:s:e:E:l:m:n:a:t:S:I:g:1rhzDL")) != -1) {
 		switch (opt) {
+			case 'b': congestion_control = optarg;
+				break;
 			case 'x': latency = optarg;
 				break;
 			case 'y': losses = optarg;
