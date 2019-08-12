@@ -734,6 +734,8 @@ int quic_client(
 
 			if (ret == 0) {
 				if (picoquic_is_0rtt_available(cnx_client) && (proposed_version & 0x0a0a0a0a) != 0x0a0a0a0a) {
+					printf("picoquic_is_0rtt_available\n");
+
 					zero_rtt_available = 1;
 
 					/* Queue a simple frame to perform 0-RTT test */
@@ -741,7 +743,13 @@ int quic_client(
 
 					ret =
 						picoquic_demo_client_start_streams(cnx_client, &callback_ctx, PICOQUIC_DEMO_STREAM_ID_INITIAL);
+				} else {
+					printf("ERROR: picoquic_is_0rtt_available\n");
+
 				}
+			} else {
+				printf("ERROR 2: picoquic_is_0rtt_available\n");
+
 			}
 
 			if (ret == 0) {
@@ -1074,19 +1082,15 @@ int quic_client(
 			fprintf(stderr, "Could not store the saved session tickets.\n");
 			printf("Could not store the saved session tickets.\n");
 
-		}
-		else {
+		} else {
 			printf("Saved session tickets.\n");
 		}
-
-
 
 		if (picoquic_save_tokens(qclient->p_first_token, current_time, token_store_filename) != 0) {
 			fprintf(stderr, "Could not save tokens to <%s>.\n", token_store_filename);
 			printf("Could not save tokens to <%s>.\n", token_store_filename);
 
-		}
-		else {
+		} else {
 			printf("Saved tokens to <%s>.\n", token_store_filename);
 
 		}
