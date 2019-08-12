@@ -97,7 +97,7 @@ target_link_libraries(picoquic-demo-server picoquic-core
 		${CMAKE_DL_LIBS}
 		)
 
-dd_executable(picoquicdemo picoquicfirst/picoquicdemo.c
+add_executable(picoquicdemo picoquicfirst/picoquicdemo.c
 		picoquicfirst/getopt.c )
 target_link_libraries(picoquicdemo picoquic-core
 		${PTLS_LIBRARIES}
