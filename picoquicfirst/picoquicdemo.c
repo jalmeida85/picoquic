@@ -703,6 +703,8 @@ int quic_client(
 
 		if (cnx_client == NULL) {
 			ret = -1;
+			printf("ERROR: not3 picoquic_is_0rtt_available\n");
+
 		} else {
 			picoquic_set_callback(cnx_client, picoquic_demo_client_callback, &callback_ctx);
 
