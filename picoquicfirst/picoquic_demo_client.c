@@ -890,9 +890,9 @@ int quic_client(
 							picoquic_demo_client_start_streams(
 								cnx_client, &callback_ctx, PICOQUIC_DEMO_STREAM_ID_INITIAL);
 
-							fprintf(stdout, "Not using 0-RTT ");
+							fprintf(stdout, "Not using 0-RTT\n");
 						} else {
-							fprintf(stdout, "Using 0-RTT ");
+							fprintf(stdout, "Using 0-RTT\n");
 						}
 					}
 
@@ -1072,10 +1072,23 @@ int quic_client(
 
 		if (picoquic_save_tickets(qclient->p_first_ticket, current_time, ticket_store_filename) != 0) {
 			fprintf(stderr, "Could not store the saved session tickets.\n");
+			printf("Could not store the saved session tickets.\n");
+
 		}
+		else {
+			printf("Saved session tickets.\n");
+		}
+
+
 
 		if (picoquic_save_tokens(qclient->p_first_token, current_time, token_store_filename) != 0) {
 			fprintf(stderr, "Could not save tokens to <%s>.\n", token_store_filename);
+			printf("Could not save tokens to <%s>.\n", token_store_filename);
+
+		}
+		else {
+			printf("Saved tokens to <%s>.\n", token_store_filename);
+
 		}
 
 		picoquic_free(qclient);
