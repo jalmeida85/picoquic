@@ -734,8 +734,6 @@ int quic_client(
 
 			if (ret == 0) {
 				if (picoquic_is_0rtt_available(cnx_client) && (proposed_version & 0x0a0a0a0a) != 0x0a0a0a0a) {
-					printf("picoquic_is_0rtt_available\n");
-
 					zero_rtt_available = 1;
 
 					/* Queue a simple frame to perform 0-RTT test */
@@ -743,14 +741,7 @@ int quic_client(
 
 					ret =
 						picoquic_demo_client_start_streams(cnx_client, &callback_ctx, PICOQUIC_DEMO_STREAM_ID_INITIAL);
-				} else {
-
-					printf("ERROR: picoquic_is_0rtt_available\n");
-
 				}
-			} else {
-				printf("ERROR 2: picoquic_is_0rtt_available\n");
-
 			}
 
 			if (ret == 0) {
@@ -899,9 +890,6 @@ int quic_client(
 							picoquic_demo_client_start_streams(
 								cnx_client, &callback_ctx, PICOQUIC_DEMO_STREAM_ID_INITIAL);
 
-							fprintf(stdout, "Not using 0-RTT\n");
-						} else {
-							fprintf(stdout, "Using 0-RTT\n");
 						}
 					}
 
@@ -966,13 +954,15 @@ int quic_client(
 												* (current_time - picoquic_get_cnx_start_time(cnx_client)));
 									fprintf(
 										stdout,
-										"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t rate: %f\n",
+										"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t rate: %f\tcongestion_control: %s\t0-rtt: %d\n",
 										latency,
 										losses,
 										picoquic_get_cnx_start_time(cnx_client),
 										current_time,
 										(unsigned long long) picoquic_get_data_received(cnx_client),
-										rate);
+										rate,
+										congestion_control,
+										zero_rtt_available);
 
 									if (F_log != stdout && F_log != stderr && F_log != NULL) {
 //										fprintf(F_log, "Received %llu bytes in %f seconds, %f Mbps.\n",
@@ -980,13 +970,15 @@ int quic_client(
 //											duration_usec / 1000000.0, receive_rate_mbps);
 										fprintf(
 											stdout,
-											"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t  rate: %f\n",
+											"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t  rate: %f\tcongestion_control: %s\t0-rtt: %d\n",
 											latency,
 											losses,
 											picoquic_get_cnx_start_time(cnx_client),
 											current_time,
 											(unsigned long long) picoquic_get_data_received(cnx_client),
-											rate);
+											rate,
+											congestion_control,
+											zero_rtt_available);
 									}
 								}
 							}
