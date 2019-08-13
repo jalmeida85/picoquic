@@ -959,7 +959,7 @@ int quic_client(
 												* (current_time - picoquic_get_cnx_start_time(cnx_client)));
 									fprintf(
 										stdout,
-										"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t rate: %f\tcongestion_control: %s\t0-rtt: %d\n",
+										"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t rate: %f\t congestion_control: %s\t 0-rtt: %d\n",
 										latency,
 										losses,
 										picoquic_get_cnx_start_time(cnx_client),
@@ -975,7 +975,7 @@ int quic_client(
 //											duration_usec / 1000000.0, receive_rate_mbps);
 										fprintf(
 											stdout,
-											"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t  rate: %f\tcongestion_control: %s\t0-rtt: %d\n",
+											"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t  rate: %f\t congestion_control: %s\t 0-rtt: %d\n",
 											latency,
 											losses,
 											picoquic_get_cnx_start_time(cnx_client),
