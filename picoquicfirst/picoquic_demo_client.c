@@ -601,9 +601,10 @@ int quic_client(
 		client_scenario_text = test_scenario_default;
 	}
 
-	const char *req_bytes = (char *) malloc(sizeof(char) * (strlen(client_scenario_text) - 1));
-	memcpy(req_bytes, client_scenario_text + 1, strlen(client_scenario_text) - 1);
-	fprintf(stdout, "REQ BYTES: %s\n", req_bytes);
+	//TODO: jalmeida --> remove this
+//	const char *req_bytes = (char *) malloc(sizeof(char) * (strlen(client_scenario_text) - 1));
+//	memcpy(req_bytes, client_scenario_text + 1, strlen(client_scenario_text) - 1);
+//	fprintf(stdout, "REQ BYTES: %s\n", req_bytes);
 
 
 	//fprintf(stdout, "Testing scenario: <%s>\n", client_scenario_text);
@@ -953,10 +954,13 @@ int quic_client(
 									duration_usec = (double) (current_time - picoquic_get_cnx_start_time(cnx_client));
 
 								if (duration_usec > 0) {
-									double rate =
-										(((double) picoquic_get_data_received(cnx_client)) * 8.0f * 1000.0f * 1000.0f)
-											/ (1024.0f * 1024.0f
-												* (current_time - picoquic_get_cnx_start_time(cnx_client)));
+
+									unsigned long int
+										nbytes = (unsigned long int) callback_ctx->first_stream->received_length;
+
+									double rate = ((double) nbytes * 8.0f * 1000.0f * 1000.0f) / (1024.0f * 1024.0f
+										* (current_time - picoquic_get_cnx_start_time(cnx_client)));
+
 									fprintf(
 										stdout,
 										"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t rate: %f\t congestion_control: %s\t 0-rtt: %d\n",
@@ -964,15 +968,12 @@ int quic_client(
 										losses,
 										picoquic_get_cnx_start_time(cnx_client),
 										current_time,
-										(unsigned long long) picoquic_get_data_received(cnx_client),
+										nbytes,
 										rate,
 										congestion_control,
 										zero_rtt_available);
 
 									if (F_log != stdout && F_log != stderr && F_log != NULL) {
-//										fprintf(F_log, "Received %llu bytes in %f seconds, %f Mbps.\n",
-//											(unsigned long long)picoquic_get_data_received(cnx_client),
-//											duration_usec / 1000000.0, receive_rate_mbps);
 										fprintf(
 											stdout,
 											"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t  rate: %f\t congestion_control: %s\t 0-rtt: %d\n",
@@ -980,7 +981,7 @@ int quic_client(
 											losses,
 											picoquic_get_cnx_start_time(cnx_client),
 											current_time,
-											(unsigned long long) picoquic_get_data_received(cnx_client),
+											nbytes,
 											rate,
 											congestion_control,
 											zero_rtt_available);
