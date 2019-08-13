@@ -956,14 +956,14 @@ int quic_client(
 								if (duration_usec > 0) {
 
 									unsigned long int
-										nbytes = (unsigned long int) callback_ctx->first_stream->received_length;
+										nbytes = (unsigned long int) callback_ctx.first_stream->received_length;
 
 									double rate = ((double) nbytes * 8.0f * 1000.0f * 1000.0f) / (1024.0f * 1024.0f
 										* (current_time - picoquic_get_cnx_start_time(cnx_client)));
 
 									fprintf(
 										stdout,
-										"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t rate: %f\t congestion_control: %s\t 0-rtt: %d\n",
+										"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %lu\t rate: %f\t congestion_control: %s\t 0-rtt: %d\n",
 										latency,
 										losses,
 										picoquic_get_cnx_start_time(cnx_client),
@@ -976,7 +976,7 @@ int quic_client(
 									if (F_log != stdout && F_log != stderr && F_log != NULL) {
 										fprintf(
 											stdout,
-											"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %llu\t  rate: %f\t congestion_control: %s\t 0-rtt: %d\n",
+											"latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %lu\t  rate: %f\t congestion_control: %s\t 0-rtt: %d\n",
 											latency,
 											losses,
 											picoquic_get_cnx_start_time(cnx_client),
