@@ -601,6 +601,11 @@ int quic_client(
 		client_scenario_text = test_scenario_default;
 	}
 
+	const char *req_bytes = (char *) malloc(sizeof(char) * (strlen(client_scenario_text) - 1));
+	memcpy(req_bytes, client_scenario_text + 1, strlen(client_scenario_text) - 1);
+	fprintf(stdout, "REQ BYTES: %s\n", req_bytes);
+
+
 	//fprintf(stdout, "Testing scenario: <%s>\n", client_scenario_text);
 	ret = demo_client_parse_scenario_desc(client_scenario_text, &client_sc_nb, &client_sc);
 	if (ret != 0) {
