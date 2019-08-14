@@ -964,14 +964,14 @@ int quic_client(
 									fprintf(
 										stdout,
 										"quic_version: picoquic\t congestion_control: %s\t 0-rtt: %d\t latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %lu\t rate: %f\n",
+										congestion_control,
+										zero_rtt_available,
 										latency,
 										losses,
 										picoquic_get_cnx_start_time(cnx_client),
 										current_time,
 										nbytes,
-										rate,
-										congestion_control,
-										zero_rtt_available);
+										rate);
 
 									if (F_log != stdout && F_log != stderr && F_log != NULL) {
 										fprintf(
