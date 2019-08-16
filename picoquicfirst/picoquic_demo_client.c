@@ -953,6 +953,9 @@ int quic_client(
 								double
 									duration_usec = (double) (current_time - picoquic_get_cnx_start_time(cnx_client));
 
+								uint64_t start_time =  picoquic_get_cnx_start_time(cnx_client) / 1000;
+								uint64_t stop_time =  current_time / 1000;
+
 								if (duration_usec > 0) {
 
 									unsigned long int
@@ -968,8 +971,8 @@ int quic_client(
 										zero_rtt_available,
 										latency,
 										losses,
-										picoquic_get_cnx_start_time(cnx_client),
-										current_time,
+										start_time,
+										stop_time,
 										nbytes,
 										rate);
 
@@ -979,8 +982,8 @@ int quic_client(
 											"quic_version: picoquic\t congestion_control: %s\t 0-rtt: %d\t latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %lu\t  rate: %f\n",
 											latency,
 											losses,
-											picoquic_get_cnx_start_time(cnx_client),
-											current_time,
+											start_time,
+											stop_time,
 											nbytes,
 											rate,
 											congestion_control,
