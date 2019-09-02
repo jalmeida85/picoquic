@@ -966,7 +966,7 @@ int quic_client(
 
 									fprintf(
 										stdout,
-										"quic_version: picoquic\t congestion_control: %s\t 0-rtt: %d\t latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %lu\t rate: %f\n",
+										"picoquic\t %s\t %d\t %s\t %s\t %lu\t %lu\t %lu\t %f\t quic_benchmark\n",
 										congestion_control,
 										zero_rtt_available,
 										latency,
@@ -979,7 +979,7 @@ int quic_client(
 									if (F_log != stdout && F_log != stderr && F_log != NULL) {
 										fprintf(
 											stdout,
-											"quic_version: picoquic\t congestion_control: %s\t 0-rtt: %d\t latency: %s\t loss_percentage: %s\t start: %lu\t stop: %lu\t bytes: %lu\t  rate: %f\n",
+											"picoquic\t %s\t %d\t %s\t %s\t %lu\t %lu\t %lu\t %f\t quic_benchmark\n",
 											latency,
 											losses,
 											start_time,
