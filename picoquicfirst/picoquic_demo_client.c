@@ -980,14 +980,14 @@ int quic_client(
 										fprintf(
 											stdout,
 											"picoquic\t %s\t %d\t %s\t %s\t %lu\t %lu\t %lu\t %f\t quic_benchmark\n",
+											congestion_control,
+											zero_rtt_available,
 											latency,
 											losses,
 											start_time,
 											stop_time,
 											nbytes,
-											rate,
-											congestion_control,
-											zero_rtt_available);
+											rate);
 									}
 								}
 							}
